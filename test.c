@@ -1,11 +1,13 @@
 #include <stdio.h>
-#include <locale.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <string.h>
 
-int main()
+int main () 
 {
-    setlocale(LC_ALL, "ru_RU.CP1251");
-	int p = 0;
-	p = getchar ();
-	printf ("%c %i", p,p);
+	int pp = 'ф';
+
+	printf("%i\n", pp);
+
 	return 0;
 }

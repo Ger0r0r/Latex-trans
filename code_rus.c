@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
 #include <errno.h>
+#include "TXLib.h"
 
 char getWord (char *word, FILE *txt);
 
@@ -13,36 +13,35 @@ char detectWord (char *word, char *patt);
 
 void clearWord (char *word);
 
-unsigned char detectLetter (unsigned char Letter);
+int detectLetter (int Letter);
 
 int main (int argc, char ** argv) 
 {
-    setlocale(LC_ALL, "ru_RU.CP1251");
 	FILE *lst, *txt;
 
 	printf("arg: %u\n", argc);
 
-    if( argc < 2)
-    {
-        printf("ARGs!!\n");
-        exit(1);
-    }
+	if( argc < 2)
+	{
+		printf("ARGs!!\n");
+		exit(1);
+	}
 
-    txt = fopen(argv[1], "r");
+	txt = fopen(argv[1], "r");
 	
-    if(errno)
-    {
-        char ans[1000];
-        sprintf(ans, "Problem file: %s\n", argv[1]);
-        perror(ans);
-        exit(1);
+	if(errno)
+	{
+		char ans[1000];
+		sprintf(ans, "Problem file: %s\n", argv[1]);
+		perror(ans);
+		exit(1);
 	}
 
 	char flag = 1;
 	char word[1000] = {0};
 	char patt[1000] = {0};
 
-    lst = fopen("list.dat ", "w");
+	lst = fopen("list.dat ", "w");
 
 	while (flag)
 	{
@@ -53,9 +52,9 @@ int main (int argc, char ** argv)
 		clearWord(word);
 	}	
 
-    fclose(lst);
-    fclose(txt);
-    return 0; 
+	fclose(lst);
+	fclose(txt);
+	return 0; 
 }
 
 char getWord (char *word, FILE *txt)
@@ -108,12 +107,12 @@ void clearWord (char *word)
 	}
 }
 
-unsigned char detectLetter (unsigned char Letter)
+int detectLetter (int Letter)
 {
 	switch (Letter)
 	{
 	case 0: return 0;
-	case 'Б':;case 'В':;case 'Г':;case 'Д':;case 'Ж':;case 'З':;case 'Й':;case 'К':;case 'Л':;case 'М':
+	case "Б":;case 'В':;case 'Г':;case 'Д':;case 'Ж':;case 'З':;case 'Й':;case 'К':;case 'Л':;case 'М':
 	case 'Н':;case 'П':;case 'Р':;case 'С':;case 'Т':;case 'Ф':;case 'Х':;case 'Ц':;case 'Ч':;case 'Ш':
 	case 'Щ':;case 'Ъ':;case 'Ь':
 	return 'B';
@@ -123,7 +122,7 @@ unsigned char detectLetter (unsigned char Letter)
 	case 'щ':;case 'ъ':;case 'ь': 
 	return 'b';
 
-	case 'А':;case 'Е':;case 'Ё':;case 'И':;case 'О':;case 'У':;case 'Ы':;case 'Э':;case 'Ю':;case 'Я':
+	case 192:;case 'Е':;case 'Ё':;case 'И':;case 'О':;case 'У':;case 'Ы':;case 'Э':;case 'Ю':;case 'Я':
 	return 'A';
 
 	case 'а':;case 'е':;case 'ё':;case 'и':;case 'о':;case 'у':;case 'ы':;case 'э':;case 'ю':;case 'я':
